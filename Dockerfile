@@ -1,21 +1,13 @@
-# Dockerfile
 FROM n8nio/n8n:latest
 
-# Allow Render to pass env vars into n8n
-ENV N8N_HOST=${N8N_HOST}
-ENV N8N_PORT=${N8N_PORT}
-ENV N8N_PROTOCOL=${N8N_PROTOCOL}
+# Set working directory
+WORKDIR /data
 
-ENV N8N_WEBHOOK_URL=${N8N_WEBHOOK_URL}
-ENV N8N_WEBHOOK_URL_EXTERNAL=${N8N_WEBHOOK_URL_EXTERNAL}
-ENV WEBHOOK_URL=${WEBHOOK_URL}
-ENV N8N_EDITOR_BASE_URL=${N8N_EDITOR_BASE_URL}
+# Copy workflows folder
+COPY workflows /data/workflows
 
-# Ensure reverse proxy trust
-ENV N8N_TRUST_PROXY=true
+# Expose the port Render will connect to
+EXPOSE 5678
 
-# Safeguards for Neon / TLS
-ENV NODE_TLS_REJECT_UNAUTHORIZED=0
-ENV DB_SSL_REJECT_UNAUTHORIZED=false
-
+# Start n8n
 CMD ["n8n"]
