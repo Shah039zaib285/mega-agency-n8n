@@ -1,13 +1,10 @@
-FROM n8nio/n8n:latest
+FROM docker.io/n8nio/n8n:latest
 
-# Set working directory
 WORKDIR /data
 
-# Copy workflows folder
+# copy custom workflows
 COPY workflows /data/workflows
 
-# Expose the port Render will connect to
-EXPOSE 5678
-
-# Start n8n
+# ensure original entrypoint + cmd are preserved
+ENTRYPOINT ["tini", "--"]
 CMD ["n8n"]
